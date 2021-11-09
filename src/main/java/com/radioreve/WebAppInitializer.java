@@ -9,16 +9,17 @@ import org.springframework.web.servlet.DispatcherServlet;
 public class WebAppInitializer implements WebApplicationInitializer {
 
   @Override
-  public void onStartup(ServletContext servletContext) {
+  public void onStartup(ServletContext container) {
 
     // Load Spring web application configuration
-    AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-    context.register(WebAppInitializerConfig.class);
+    AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
+    ctx.register(WebAppInitializerConfig.class);
+    ctx.setServletContext(container);
 
-    // Create and register the DispatcherServlet
-    DispatcherServlet servlet = new DispatcherServlet(context);
-    ServletRegistration.Dynamic registration = servletContext.addServlet("app", servlet);
+    // Register and map the dispatcher servlet
+    DispatcherServlet servlet = new DispatcherServlet(ctx);
+    ServletRegistration.Dynamic registration = container.addServlet("app", servlet);
     registration.setLoadOnStartup(1);
-    registration.addMapping("/app/*");
+    registration.addMapping("/");
   }
 }

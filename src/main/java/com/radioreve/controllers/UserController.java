@@ -6,8 +6,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class UserController {
 
-  @GetMapping("/lja")
+  @GetMapping("/home")
   public String sayHello() {
-    return "Hello LJA";
+    return "home";
+  }
+
+  @GetMapping("/home2")
+  public String sayHello2() {
+    return "home";
   }
 }
